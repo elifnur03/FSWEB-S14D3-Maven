@@ -3,9 +3,6 @@ import org.example.arge.ElectricCar;
 import org.example.arge.GasPoweredCar;
 import org.example.arge.HybridCar;
 import org.example.company.Car;
-import org.example.company.Ford;
-import org.example.company.Holden;
-import org.example.company.Mitsubishi;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,10 +21,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @ExtendWith(ResultAnalyzer.class)
 public class MainTest {
 
-    Car car;
-    Mitsubishi mitsubishi;
-    Holden holden;
-    Ford ford;
+    private Car car;
+    Car.Mitsubishi mitsubishi;
+    Car.Holden holden;
+    Car.Ford ford;
     CarSkeleton carSkeleton;
     GasPoweredCar gasPoweredCar;
     HybridCar hybridCar;
@@ -37,13 +34,13 @@ public class MainTest {
     @BeforeEach
     void setUp() {
         car = new Car(4, "Mercedes");
-        mitsubishi = new Mitsubishi(4, "Mitsubishi");
-        holden = new Holden(4, "Holden");
-        ford = new Ford(4, "Ford");
+        mitsubishi = new Car.Mitsubishi(4, "Mitsubishi");
+        holden = new Car.Holden(4, "Holden");
+        ford = new Car.Ford(4, "Ford");
         carSkeleton = new CarSkeleton("Test", "test");
         electricCar = new ElectricCar("Test", "test", 10, 5);
         gasPoweredCar = new GasPoweredCar("Test", "test", 10, 4);
-        hybridCar = new HybridCar("Test", "test", 10, 5, 4);
+        hybridCar = new HybridCar("Test", "test", 5, 4);
     }
 
     @DisplayName("Car sınıf değişkenleri doğru access modifier değerlerine sahip mi ?")
@@ -83,7 +80,7 @@ public class MainTest {
         PrintStream saveOut = System.out;
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
-        assertEquals(car.accelerate(), "the car is accelerating");
+        assertEquals(car.accelerate(), "Car - the car is accelerating");
         assertThat(out.toString(), containsString(car.getClass().getSimpleName()));
     }
 
@@ -101,8 +98,8 @@ public class MainTest {
     @Test
     public void testChildClassTypes() throws NoSuchFieldException {
         assertThat(mitsubishi, instanceOf(Car.class));
-        assertThat(ford, instanceOf(Ford.class));
-        assertThat(holden, instanceOf(Holden.class));
+        assertThat(ford, instanceOf(Car.Ford.class));
+        assertThat(holden, instanceOf(Car.Holden.class));
     }
 
     @DisplayName("CarSkeleton sınıf değişkenleri doğru type değerlerine sahip mi ?")
@@ -146,7 +143,7 @@ public class MainTest {
         assertThat(hybridCar.getName(), instanceOf(String.class));
         assertThat(hybridCar.getDescription(), instanceOf(String.class));
         assertThat(hybridCar.getCylinders(), instanceOf(Integer.class));
-        assertThat(hybridCar.getAvgKmPerLitre(), instanceOf(Double.class))
+        assertThat(hybridCar.getAvgKmPerLitre(), instanceOf(Double.class));;
         assertThat(hybridCar.getBatterySize(), instanceOf(Integer.class));
     }
 
